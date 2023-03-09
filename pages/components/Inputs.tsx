@@ -14,7 +14,7 @@ const CodeOutputTitle = (props: React.PropsWithChildren<any>) => (
     {props.children}
   </Text>
 );
-export function CodeOutput(props: CodeOutputProps) {
+export default function CodeOutput(props: CodeOutputProps) {
   const { fromLanguage, toLanguage, code, convertedCode } = props;
   const { hasCopied: originalHasCopied, onCopy: originalCodeCopy } =
     useClipboard(code);

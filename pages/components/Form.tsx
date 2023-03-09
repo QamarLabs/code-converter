@@ -17,7 +17,7 @@ import {
   AccordionIcon,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { CodeOutput } from "./Inputs";
+import CodeOutput from "./Inputs";
 import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import GPT3Tokenizer from "gpt3-tokenizer";

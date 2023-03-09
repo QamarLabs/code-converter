@@ -5,7 +5,7 @@ import { Text } from "@chakra-ui/react";
 interface HeaderTextProps {
     title: string;
 }
-export const HeaderText = ({title}: HeaderTextProps) => {
+const HeaderText = ({title}: HeaderTextProps) => {
   return (
     <Text height='5rem' fontSize="4rem" bgGradient='linear-gradient(to right, #00c6ff, #0072ff)' backgroundClip='text' fontWeight='900'>
         <TypedText text={title} />
@@ -43,3 +43,4 @@ export const TypedText = ({ text }: TypedTextProps) => {
   return <span>{typed}</span>;
 };
 
+export default HeaderText;

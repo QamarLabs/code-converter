@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Form from './components/Form'
 import { VStack } from '@chakra-ui/react'
-import { HeaderText } from './components/Typography'
+import HeaderText from './components/Typography'
 
 const inter = Inter({ subsets: ['latin'] })
 
