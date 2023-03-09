@@ -37,7 +37,8 @@ export const TypedText = ({ text }: TypedTextProps) => {
     return () => {        
         clearInterval(intervalId);
     };
-  }, [currentIndex, text]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [currentIndex, text]);
 
   return <span>{typed}</span>;
 };
