@@ -1,9 +1,9 @@
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -104,4 +104,28 @@ a {
   html {
     color-scheme: dark;
   }
+}
+#js {
+  background: linear-gradient(110deg, #f0db4f 66%, #f0db4f 0, #323330 0);
+}
+#ts {
+  background: linear-gradient(110deg, #007acc 33%, #007acc 0, #ffffff 0);
+}
+#php-bg {
+  background: linear-gradient(110deg, #b0b3d6 33%, #b0b3d6 0, #474a8a 0);
+}
+#py {
+  background: linear-gradient(110deg, #306998 33%, #ffe873 0, #ffe873 0);
+}
+
+#rby {
+  background: linear-gradient(110deg, #ec2929 33%, #cc0000 0, #cc0000 0);
+}
+
+#go {
+  background: linear-gradient(110deg, #59e5d7 33%, #29beb0 0, #29beb0 0);
+}
+
+#jv {
+  background: linear-gradient(110deg, #f89820 33%, #5382a1 0, #5382a1 0);
 }
