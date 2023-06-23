@@ -37,7 +37,7 @@ function Form() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     setTokenCount(currentTokenCount(origCode));
-  }, [origCode])
+  }, [origCode]);
 
   const toast = useToast();
   const formik = useFormik<LanguageFormValues>({
@@ -46,58 +46,74 @@ function Form() {
       toLanguage: "",
       code: "",
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values: any) => {
       setIsSubmitting(true);
-      if(currentTokenCount(values.code) > 500) {
-        return toast({
-          title: 'Too many tokens in use',
-          description: "Code is too long. Please shorten it to 500 tokens or less.",
-          status: 'error',
-          duration: 8000,
-          isClosable: true,
-        })
+      try {
+        if (currentTokenCount(values.code) > 500) {
+          return toast({
+            title: "Too many tokens in use",
+            description:
+              "Code is too long. Please shorten it to 500 tokens or less.",
+            status: "error",
+            duration: 8000,
+            isClosable: true,
+          });
+        }
+        const { data: openaiResponse } = await axios.post("/api/convert-code", {
+          from: values.fromLanguage,
+          to: values.toLanguage,
+          code: values.code,
+        });
+        const convertedCodeChoice = openaiResponse.data.choices[0].text;
+        setConvertedCode(convertedCodeChoice);
+      } finally {
+        setIsSubmitting(false);
       }
-      const { data: openaiResponse } = await axios.post("/api/convert-code", {
-        from: values.fromLanguage,
-        to: values.toLanguage,
-        code: values.code,
-      });
-      const convertedCodeChoice = openaiResponse.data.choices[0].text;
-      setConvertedCode(convertedCodeChoice);
-      setIsSubmitting(false);
     },
   });
 
   const currentTokenCount = (codeValue: string): number => {
-    const tokenizer = new GPT3Tokenizer({ type: 'gpt3' }); // or 'codex'
+    const tokenizer = new GPT3Tokenizer({ type: "gpt3" }); // or 'codex'
     return tokenizer.encode(codeValue).bpe.length;
-}
+  };
 
   return (
     <form onSubmit={formik.handleSubmit} style={{ width: "100%" }}>
-      <FormControl id="code" isInvalid={!!formik.errors.code} position='relative'>
+      <FormControl
+        id="code"
+        isInvalid={!!formik.errors.code}
+        position="relative"
+      >
         <FormLabel>Code</FormLabel>
         <Textarea
           fontFamily="mono"
           placeholder="Enter code"
-          onChange={e => {
+          onChange={(e) => {
             formik.setFieldValue("code", e.target.value);
             setOrigCode(e.target.value);
           }}
           value={formik.values.code}
-          userSelect="none"
           textDecoration="none"
           textDecorationColor="transparent"
-          position='relative'
-          />
-          <Text textAlign='right' colorScheme={tokenCount > 500 ? 'red' : 'blackAlpha'}>Tokens In Use: {tokenCount}</Text>
-          <FormErrorMessage>{formik.errors.code}</FormErrorMessage>
+          position="relative"
+          resize="vertical"
+          style={{
+            touchAction: 'manipulation'
+          }}
+        />
+        <Text
+          textAlign="right"
+          colorScheme={tokenCount > 500 ? "red" : "blackAlpha"}
+        >
+          Tokens In Use: {tokenCount}
+        </Text>
+        <FormErrorMessage>{formik.errors.code}</FormErrorMessage>
       </FormControl>
       <FormControl id="fromLanguage" isInvalid={!!formik.errors.fromLanguage}>
         <FormLabel>From</FormLabel>
         <Select
           placeholder="Select language"
-          onChange={(event) => {
+          onChange={(event: any) => {
             if (
               event.currentTarget.options &&
               event.currentTarget.options.length &&
@@ -188,7 +204,13 @@ function Form() {
         </Select>
         <FormErrorMessage>{formik.errors.toLanguage}</FormErrorMessage>
       </FormControl>
-      <Button isLoading={isSubmitting} type="submit" mt={4} colorScheme="green" mb={4}>
+      <Button
+        isLoading={isSubmitting}
+        type="submit"
+        mt={4}
+        colorScheme="green"
+        mb={4}
+      >
         Convert
       </Button>
       <Accordion allowToggle={true}>
